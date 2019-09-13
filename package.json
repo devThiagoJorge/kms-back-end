@@ -1,0 +1,28 @@
+{
+  "name": "learning-node-js-project",
+  "version": "1.0.0",
+  "description": "Projeto de aprendizado Node.js + MongoDB. Inclui cadastro, autenticação, etc..",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel7731s/learning-node-js-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabriel7731s/learning-node-js-project/issues"
+  },
+  "homepage": "https://github.com/gabriel7731s/learning-node-js-project#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.0",
+    "nodemon": "^1.19.2"
+  }
+}

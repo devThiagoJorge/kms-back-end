@@ -8,7 +8,9 @@ require('./models/user'); //Importa o model do user
 
 app.use(express.json());
 
-app.use('/api', require('./routes/routes'));
+app.use('/user', require('./routes/routes'));
+
+app.use('/projects', require('./controllers/projectController'));
 
 app.listen(3000);
 

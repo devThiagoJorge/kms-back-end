@@ -17,8 +17,10 @@ module.exports = {
         return res.status(400).send({error: 'User already exists!'})  
       }
       
-      const user = User.create(req.body);
-      
+      const user = await User.create(req.body);
+    
+      user.password = undefined;
+
       return res.status(200).send(
         {user,
         token: generateToken({ id: user.id })}

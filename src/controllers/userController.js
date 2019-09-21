@@ -14,7 +14,7 @@ module.exports = {
       const { email } = req.body;
 
       if (await User.findOne({ email })) {
-        return res.status(400).send({error: 'User already exists!'})  
+        return res.send({error: 'User already exists!', errorId: '1'})  
       }
       
       const user = await User.create(req.body);
@@ -26,7 +26,7 @@ module.exports = {
         token: generateToken({ id: user.id })}
       );
     } catch (error) {
-      return res.status(400).send({error: 'User registration failed!'})
+      return res.send({error: 'User registration failed!', errorId: '2'})
     }
   },
 
@@ -34,13 +34,13 @@ module.exports = {
     const {email, password} = req.body;
 
     if (!await User.findOne({ email })) { //Se não for encontrado o e-mail (ou seja, se for false, negação de true)
-      return res.status(400).send({error: 'User not found.'});
+      return res.send({error: 'User not found.', errorId: '1'});
     }
 
     const user = await User.findOne({email}).select('+password'); //.select('+password') seleciona o password do email, pois o mesmo está definido como false no model, ou seja, não é retornado    
 
     if (!await bcryptjs.compare(password, user.password)) { //O bcrypt.compare verifica se a senha não bate com a senha criptografada
-      return res.status(400).send({error: 'Invalid password.'});
+      return res.send({error: 'Invalid password.', errorId: '2'});
     }
 
     user.password = undefined; //Define a senha como undefined, para não ser mostrada para o cliente

@@ -4,8 +4,8 @@ const routes = expres.Router();
 
 const userController = require('../controllers/userController');
 
-routes.post('/register', userController.create);
+routes.post('/signup', userController.create);
 
-routes.post('/authenticate', userController.authenticate);
+routes.post('/login', userController.authenticate);
 
 module.exports = routes;

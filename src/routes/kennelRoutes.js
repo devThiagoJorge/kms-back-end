@@ -4,10 +4,10 @@ const routes = expres.Router();
 
 const authMiddleware = require('../middlewares/auth');
 
-const projectController = require('../controllers/projectController');
+const kennelController = require('../controllers/kennelController');
 
 routes.use(authMiddleware);  
 
-routes.get('/', projectController.ok);
+routes.get('/', kennelController.ok);
   
 module.exports = routes;

@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.pre('save', async function(next){ //Antes de salvar um novo user, é feita a encriptada a sua senha
+userSchema.pre('save', async function(next){ //Antes de salvar um novo user, é encriptada a sua senha
   const hash = await bcrypjs.hash(this.password, 10); //É gerado um hash a partir de sua senha | 10: número de vezes que o hash é gerado, para fortificar a encriptação
   this.password = hash;
 

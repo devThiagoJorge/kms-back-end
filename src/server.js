@@ -6,9 +6,11 @@ const app = express();
 
 app.use(cors());
 
+const requireDir = require('require-dir');
+
 require('./database/connection'); //Importa o arquivo de conexão do banco de dados
 
-require('./models/user'); //Importa o model do user
+requireDir('./models'); //Importa o model do user
 
 app.use(express.json());
 

@@ -14,19 +14,19 @@ module.exports = {
       const { email } = req.body;
 
       if (await User.findOne({ email })) {
-        return res.send({error: 'User already exists!', errorId: '1'})  
+        return res.send({error: 'User already exists.', errorId: '1'})  
       }
       
       const user = await User.create(req.body);
     
       user.password = undefined;
 
-      return res.status(200).send(
+      return res.send(
         {user,
         token: generateToken({ id: user.id })}
       );
     } catch (error) {
-      return res.send({error: 'User registration failed!', errorId: '2'})
+      return res.send({error: 'User registration failed.', errorId: '2'})
     }
   },
 
@@ -45,7 +45,7 @@ module.exports = {
 
     user.password = undefined; //Define a senha como undefined, para não ser mostrada para o cliente
     
-    return res.status(200).send({ 
+    return res.send({ 
       user,
       token: generateToken({ id: user.id})
     });

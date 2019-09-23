@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 //   {
 //     useNewUrlParser: true,
 //     useCreateIndex: true,
-//     useUnifiedTopology: true
+//     useUnifiedTopology: true,
+//     useFindAndModify: false
 //   }
 // );
 
@@ -12,6 +13,7 @@ mongoose.connect('mongodb+srv://node-js-learning-user:pltADEaEQ6l6USCh@cluster-0
   {
     useNewUrlParser: true, 
     useCreateIndex: true, 
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   }
 );

@@ -46,19 +46,43 @@ module.exports = {
 
       return res.send({kennel});      
     } catch (error) {
-      return res.send({error: 'Error creating kennel.', msg: error});
+      return res.send({error: 'Error creating kennel.'});
     }
   },
 
   async update(req, res){
+    
     try {
-      const kennel = await Kennel.findByIdAndUpdate(req.params.id, req.body,{
-        new: true
-      });
+      const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, baias} = req.body;
+
+      const kennel = await Kennel.findByIdAndUpdate(req.params.id, {
+        name,
+        estado,
+        cidade,
+        bairro,
+        rua,
+        numero,
+        email,
+        phone1,
+        phone2
+      }, {new: true}); //Retorna o Kennel atualizado (e não o antigo)
+
+      kennel.baias = [];
+      await Baia.remove({kennel: kennel._id})
+
+      await Promise.all(baias.map(async baia => {
+        const kennelBaia = new Baia({...baia, kennel: kennel._id});
+
+        await kennelBaia.save();
+           
+        kennel.baias.push(kennelBaia);
+      }));
+
+      await kennel.save();
 
       return res.send({kennel});      
     } catch (error) {
-      return res.send({error: 'Error updating kennel.'})
+      return res.send({error: 'Error updating kennel.'});
     }
   },
 

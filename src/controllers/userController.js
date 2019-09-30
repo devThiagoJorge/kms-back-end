@@ -49,6 +49,37 @@ module.exports = {
       user,
       token: generateToken({ id: user.id})
     });
+  },
+
+  async show(req, res){
+    try {
+      const user = await User.findOne({email: req.params.email});
+  
+      if (user == null) {
+        return res.send({error: 'User not found.'})
+      }
+
+      return res.send({user});      
+    } catch (error) {
+      return res.send({error: 'Error retrieving user information.'})
+    }
+  },
+
+  async update(req, res){    
+    try {
+      const userFromParam = await User.findOne({email: req.params.email});
+
+      const userFromReq = await User.findOne({_id: req.userId});
+      
+      if (userFromParam.id == userFromReq.id) {
+        const user = await User.findByIdAndUpdate(req.userId, req.body, {new: true});
+        return res.send({user});        
+      }else{
+        throw new Error;
+      }
+    } catch (error) {
+      return res.send({error: 'Error updating user.'})
+    }
   }
 };
 

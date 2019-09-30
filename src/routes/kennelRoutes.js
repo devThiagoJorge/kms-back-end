@@ -8,11 +8,11 @@ const kennelController = require('../controllers/kennelController');
 
 routes.use(authMiddleware);  
 
+routes.post('/', kennelController.create);
+
 routes.get('/', kennelController.list);
 
 routes.get('/:id', kennelController.show);
-
-routes.post('/', kennelController.create);
 
 routes.put('/:id', kennelController.update);
 

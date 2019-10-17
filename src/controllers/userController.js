@@ -32,7 +32,7 @@ module.exports = {
 
   async authenticate(req, res){
     const {email, password} = req.body;
-
+    
     if (!await User.findOne({ email })) { //Se não for encontrado o e-mail (ou seja, se for false, negação de true)
       return res.send({error: 'User not found.', errorId: '1'});
     }
@@ -73,12 +73,31 @@ module.exports = {
       
       if (userFromParam.id == userFromReq.id) {
         const user = await User.findByIdAndUpdate(req.userId, req.body, {new: true});
-        return res.send({user});        
+        return res.send({user});
       }else{
         throw new Error;
       }
     } catch (error) {
       return res.send({error: 'Error updating user.'})
+    }
+  },
+
+  async index(req, res){
+    try{
+      const {firstName} = req.query;
+
+      const {lastName} = req.query;
+
+      users = await User.find({$and:[
+        {firstName: { $regex: firstName, $options: "i" } }, 
+        {lastName: { $regex: lastName, $options: "i" } }
+      ]});            
+
+      //regex: Expressão regular (encontra nomes que contenham em qualquer parte do nome, as letras pesquisadas pelo usuário)
+
+      return res.json(users);
+    } catch (error) {
+      return res.status(400).json({error: "Failed searching for users."});
     }
   }
 };

@@ -10,7 +10,9 @@ routes.post('/signup', userController.create);
 
 routes.post('/login', userController.authenticate);
 
-routes.get('/user/:email', userController.show);
+routes.get('/user/search', userController.index);
+
+routes.get('/user/profile/:email', userController.show);
 
 routes.put('/user/:email', function(req, res) {
   authMiddleware(req, res, function() {

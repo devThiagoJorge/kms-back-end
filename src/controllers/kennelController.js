@@ -5,9 +5,13 @@ const Kennel = mongoose.model('Kennel');
 const Dog = mongoose.model('Dog')
 
 module.exports = {  
-  async list(req, res){
+  async index(req, res){
     try {
-      const kennels = await Kennel.find().populate(['kennelAdm', 'dogs']);
+      const {name} = req.query;
+
+      const kennels = await Kennel.find({
+        name: { $regex: name, $options: "i" }
+      }).populate(['kennelAdm', 'dogs']);
 
       return res.send({kennels});      
     } catch (error) {
@@ -30,13 +34,13 @@ module.exports = {
       const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, dogs} = req.body;
 
       const kennel = await Kennel.create({name, estado, cidade, bairro, rua, numero, email, phone1, phone2, kennelAdm: req.userId})
-
+      
       await Promise.all(dogs.map(async dog => {
-        const Dog = new Dog({...dog, kennel: kennel._id});
+        const newDog = new Dog({...dog, kennel: kennel._id});
 
-        await Dog.save();
+        await newDog.save();
            
-        kennel.dogs.push(Dog);
+        kennel.dogs.push(newDog);
       }));
 
       await kennel.save();
@@ -47,8 +51,7 @@ module.exports = {
     }
   },
 
-  async update(req, res){
-    
+  async update(req, res){    
     try {
       const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, dogs} = req.body;
 
@@ -65,14 +68,14 @@ module.exports = {
       }, {new: true}); //Retorna o Kennel atualizado (e não o antigo)
 
       kennel.dogs = [];
-      await Dog.remove({kennel: kennel._id})
+      await Dog.deleteMany({kennel: kennel._id})
 
       await Promise.all(dogs.map(async dog => {
-        const Dog = new Dog({...dog, kennel: kennel._id});
+        const updatedDog = new Dog({...dog, kennel: kennel._id});
 
-        await Dog.save();
+        await updatedDog.save();
            
-        kennel.dogs.push(Dog);
+        kennel.dogs.push(updatedDog);
       }));
 
       await kennel.save();

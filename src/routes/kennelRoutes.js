@@ -10,7 +10,7 @@ routes.use(authMiddleware);
 
 routes.post('/', kennelController.create);
 
-routes.get('/', kennelController.list);
+routes.get('/search', kennelController.index);
 
 routes.get('/:id', kennelController.show);
 

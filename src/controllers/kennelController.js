@@ -2,15 +2,12 @@ const mongoose = require('mongoose');
 
 const Kennel = mongoose.model('Kennel');
 
-const Baia = mongoose.model('Baia')
+const Dog = mongoose.model('Dog')
 
-module.exports = {
-  // async ok(req, res){
-  //   return res.send({ok: true, id: req.userId});
-  // }
+module.exports = {  
   async list(req, res){
     try {
-      const kennels = await Kennel.find().populate(['kennelAdm', 'baias']);
+      const kennels = await Kennel.find().populate(['kennelAdm', 'dogs']);
 
       return res.send({kennels});      
     } catch (error) {
@@ -20,7 +17,7 @@ module.exports = {
 
   async show(req, res){
     try {
-      const kennel = await Kennel.findById(req.params.id).populate(['kennelAdm', 'baias']);
+      const kennel = await Kennel.findById(req.params.id).populate(['kennelAdm', 'dogs']);
     
       return res.send({kennel});      
     } catch (error) {
@@ -30,16 +27,16 @@ module.exports = {
 
   async create(req, res){
     try {
-      const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, baias} = req.body;
+      const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, dogs} = req.body;
 
       const kennel = await Kennel.create({name, estado, cidade, bairro, rua, numero, email, phone1, phone2, kennelAdm: req.userId})
 
-      await Promise.all(baias.map(async baia => {
-        const kennelBaia = new Baia({...baia, kennel: kennel._id});
+      await Promise.all(dogs.map(async dog => {
+        const Dog = new Dog({...dog, kennel: kennel._id});
 
-        await kennelBaia.save();
+        await Dog.save();
            
-        kennel.baias.push(kennelBaia);
+        kennel.dogs.push(Dog);
       }));
 
       await kennel.save();
@@ -53,7 +50,7 @@ module.exports = {
   async update(req, res){
     
     try {
-      const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, baias} = req.body;
+      const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, dogs} = req.body;
 
       const kennel = await Kennel.findByIdAndUpdate(req.params.id, {
         name,
@@ -67,15 +64,15 @@ module.exports = {
         phone2
       }, {new: true}); //Retorna o Kennel atualizado (e não o antigo)
 
-      kennel.baias = [];
-      await Baia.remove({kennel: kennel._id})
+      kennel.dogs = [];
+      await Dog.remove({kennel: kennel._id})
 
-      await Promise.all(baias.map(async baia => {
-        const kennelBaia = new Baia({...baia, kennel: kennel._id});
+      await Promise.all(dogs.map(async dog => {
+        const Dog = new Dog({...dog, kennel: kennel._id});
 
-        await kennelBaia.save();
+        await Dog.save();
            
-        kennel.baias.push(kennelBaia);
+        kennel.dogs.push(Dog);
       }));
 
       await kennel.save();

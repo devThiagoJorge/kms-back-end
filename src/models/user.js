@@ -22,6 +22,22 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false
   },
+  cellPhone: {
+    type: String,
+    required: false
+  },
+  homePhone: {
+    type: String,
+    required: false
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: String,
+    required: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

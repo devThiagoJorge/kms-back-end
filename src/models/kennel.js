@@ -42,9 +42,9 @@ const kennelSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  baias: [{
+  dogs: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Baia'
+    ref: 'Dog'
   }]
 });
 

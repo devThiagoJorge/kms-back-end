@@ -20,4 +20,10 @@ routes.put('/user/:email', function(req, res) {
   });
 });
 
+routes.delete('/user/:email', function(req, res) {
+  authMiddleware(req, res, function() {
+    userController.delete(req, res);    
+  });
+});
+
 module.exports = routes;

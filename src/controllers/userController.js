@@ -99,6 +99,24 @@ module.exports = {
     } catch (error) {
       return res.status(400).json({error: "Failed searching for users."});
     }
+  },
+
+  async delete(req, res){    
+    try {
+      const userFromParam = await User.findOne({email: req.params.email});
+
+      const userFromReq = await User.findOne({_id: req.userId});
+      
+      if (userFromParam.id == userFromReq.id) {
+        await User.findByIdAndDelete(req.userId);
+
+        return res.send({success: 'User deleted.'});
+      }else{
+        throw new Error;
+      }
+    } catch (error) {
+      return res.send({error: 'Error deleting user.'})
+    }
   }
 };
 

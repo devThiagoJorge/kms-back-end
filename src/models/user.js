@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  cep:{
+    type: String,
+    required: true
+  },
   state: {
     type: String,
     required: true

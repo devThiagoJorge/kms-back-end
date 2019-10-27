@@ -91,19 +91,20 @@ module.exports = {
       const { firstName, lastName } = req.query;
 
       if (lastName == undefined) {
-        users = await User.find({ firstName: { $regex: firstName, $options: "i" } });
+        let users = await User.find({ firstName: { $regex: firstName, $options: "i" } });
+        return res.send({users});
       } else {
-        users = await User.find({
+        let users = await User.find({
           $and: [
             { firstName: { $regex: firstName, $options: "i" } },
             { lastName: { $regex: lastName, $options: "i" } }
           ]
         });
+        return res.send({users});
       }
       //regex: Expressão regular (encontra nomes que contenham em qualquer parte do nome, as letras pesquisadas pelo usuário)
-      return res.json(users);
     } catch (error) {
-      return res.status(400).json({ error: "Failed searching for users." });
+      return res.send({ error: "Failed searching for users." });
     }
   },
 

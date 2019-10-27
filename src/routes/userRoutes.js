@@ -26,4 +26,10 @@ routes.delete('/user/:email', function(req, res) {
   });
 });
 
+routes.put('/user/:email/password', function(req, res) {
+  authMiddleware(req, res, function() {
+    userController.updatePassword(req, res);    
+  });
+});
+
 module.exports = routes;

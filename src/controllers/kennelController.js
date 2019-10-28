@@ -31,17 +31,19 @@ module.exports = {
 
   async create(req, res){
     try {
-      const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, dogs} = req.body;
-
-      const kennel = await Kennel.create({name, estado, cidade, bairro, rua, numero, email, phone1, phone2, kennelAdm: req.userId})
+      const {name, cep, estado, cidade, bairro, rua, numero, email, cellPhone, homePhone, dogs} = req.body;
       
-      await Promise.all(dogs.map(async dog => {
-        const newDog = new Dog({...dog, kennel: kennel._id});
-
-        await newDog.save();
-           
-        kennel.dogs.push(newDog);
-      }));
+      const kennel = await Kennel.create({name, cep, estado, cidade, bairro, rua, numero, email, cellPhone, homePhone, kennelAdm: req.userId})
+      
+      if (dogs != undefined) {
+        await Promise.all(dogs.map(async dog => {
+          const newDog = new Dog({...dog, kennel: kennel._id});
+  
+          await newDog.save();
+             
+          kennel.dogs.push(newDog);
+        }));        
+      }
 
       await kennel.save();
 
@@ -53,18 +55,19 @@ module.exports = {
 
   async update(req, res){    
     try {
-      const {name, estado, cidade, bairro, rua, numero, email, phone1, phone2, dogs} = req.body;
+      const {name, cep, estado, cidade, bairro, rua, numero, email, cellPhone, homePhone, dogs} = req.body;
 
       const kennel = await Kennel.findByIdAndUpdate(req.params.id, {
         name,
+        cep,
         estado,
         cidade,
         bairro,
         rua,
         numero,
         email,
-        phone1,
-        phone2
+        cellPhone,
+        homePhone
       }, {new: true}); //Retorna o Kennel atualizado (e não o antigo)
 
       kennel.dogs = [];

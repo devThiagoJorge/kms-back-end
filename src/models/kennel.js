@@ -5,6 +5,10 @@ const kennelSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  cep:{
+    type: String,
+    required: true
+  },
   estado: {
     type: String,
     required: true
@@ -29,11 +33,11 @@ const kennelSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  phone1: {
+  cellPhone: {
     type: String,
-    required: true
+    required: false
   },
-  phone2: {
+  homePhone: {
     type: String,
     required: false,
   },

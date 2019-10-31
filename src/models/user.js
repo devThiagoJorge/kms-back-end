@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false
   },
-  cellPhone: {
+  cellphone: {
     type: String,
     required: false
   },

@@ -9,7 +9,7 @@ module.exports = {
     try {
       const { name, kennelAdm } = req.query;
 
-      console.log(name, kennelAdm);
+      // console.log(name, kennelAdm);
       if (name != undefined) {
         const kennels = await Kennel.find({
           name: { $regex: name, $options: "i" }
@@ -95,7 +95,7 @@ module.exports = {
 
       await kennel.save();
 
-      return res.send({ kennel });
+      return res.send(kennel);
     } catch (error) {
       return res.send({ error: 'Error updating kennel.' });
     }

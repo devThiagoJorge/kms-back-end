@@ -90,17 +90,22 @@ module.exports = {
     try {
       const { firstName, lastName } = req.query;
 
+      const {page = 1} = req.query
+
+      console.log(lastName)
+
       if (lastName == undefined) {
-        let users = await User.find({ firstName: { $regex: firstName, $options: "i" } });
-        return res.send({users});
-      } else {
-        let users = await User.find({
+        let users = await User.paginate({ firstName: { $regex: firstName, $options: "i" } }, {page, limit:5});
+        return res.send({ users });
+      }
+      else {
+        let users = await User.paginate({
           $and: [
             { firstName: { $regex: firstName, $options: "i" } },
             { lastName: { $regex: lastName, $options: "i" } }
           ]
-        });
-        return res.send({users});
+        },{page, limit:5});
+        return res.send({ users });
       }
       //regex: Expressão regular (encontra nomes que contenham em qualquer parte do nome, as letras pesquisadas pelo usuário)
     } catch (error) {

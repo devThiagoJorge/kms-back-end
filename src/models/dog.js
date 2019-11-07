@@ -9,13 +9,17 @@ const dogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  yearsOld: { //anos de idade
-    type: Number,
+  // yearsOld: { //anos de idade
+  //   type: Number,
+  //   required: true
+  // },
+  // monthsOld: { //meses de idade
+  //   type: Number,
+  //   required: false
+  // },
+  birthday:{
+    type: Date,
     required: true
-  },
-  monthsOld: { //meses de idade
-    type: Number,
-    required: false
   },
   size: { //porte (pequeno, médio, etc)
     type: String,
@@ -41,5 +45,3 @@ const dogSchema = new mongoose.Schema({
 });
 
 mongoose.model('Dog', dogSchema);
-
-

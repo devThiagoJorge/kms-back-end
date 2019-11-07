@@ -12,7 +12,7 @@ const bcrypjs = require('bcryptjs');
 
 module.exports = {
   async create(req, res) {
-    try {
+    try {cont
       const { email } = req.body;
 
       if (await User.findOne({ email })) {

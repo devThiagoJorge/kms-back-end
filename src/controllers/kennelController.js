@@ -19,7 +19,7 @@ module.exports = {
       } else {
         
         try {
-          const kennel = await Kennel.findOne({kennelAdm});          
+          const kennel = await Kennel.findOne({kennelAdm}).populate(['kennelAdm', 'dogs']);          
           return res.send(kennel);
         } catch (error) {
           return res.send({ error: "Error searching for user's kennel." })
@@ -83,7 +83,10 @@ module.exports = {
       }, { new: true }); //Retorna o Kennel atualizado (e não o antigo)
 
       kennel.dogs = [];
+
       await Dog.deleteMany({ kennel: kennel._id })
+
+      console.log(dogs);
 
       await Promise.all(dogs.map(async dog => {
         const updatedDog = new Dog({ ...dog, kennel: kennel._id });

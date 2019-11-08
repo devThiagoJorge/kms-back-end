@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const mongoosePaginate = require('mongoose-paginate');
 const bcrypjs = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   }
 });
-
+userSchema.plugin(mongoosePaginate);
 userSchema.pre('save', async function(next){ //Antes de salvar um novo user, é encriptada a sua senha
   const hash = await bcrypjs.hash(this.password, 10); //É gerado um hash a partir de sua senha | 10: número de vezes que o hash é gerado, para fortificar a encriptação
   this.password = hash;

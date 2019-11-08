@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const mongoosePaginate = require('mongoose-paginate');
 const kennelSchema = new mongoose.Schema({
   name: {
     type: String,

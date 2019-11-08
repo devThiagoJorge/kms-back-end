@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const dogSchema = new mongoose.Schema({
   name: {
@@ -43,5 +44,7 @@ const dogSchema = new mongoose.Schema({
     required: true
   }
 });
-
+dogSchema.plugin(mongoosePaginate);
 mongoose.model('Dog', dogSchema);
+
+

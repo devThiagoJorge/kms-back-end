@@ -17,9 +17,8 @@ module.exports = {
 
         return res.send({ kennels });
       } else {
-        
         try {
-          const kennel = await Kennel.findOne({kennelAdm}).populate(['kennelAdm', 'dogs']);          
+          const kennel = await Kennel.findOne({ kennelAdm }).populate(['kennelAdm', 'dogs']);
           return res.send(kennel);
         } catch (error) {
           return res.send({ error: "Error searching for user's kennel." })

@@ -19,7 +19,7 @@ const dogSchema = new mongoose.Schema({
   //   required: false
   // },
   birthday:{
-    type: Date,
+    type: String,
     required: true
   },
   size: { //porte (pequeno, médio, etc)

@@ -18,6 +18,8 @@ app.use('/', require('./routes/userRoutes'));
 
 app.use('/kennel', require('./routes/kennelRoutes'));
 
+app.use('/dog', require('./routes/dogRoutes'));
+
 app.listen(3001);
 
 console.log('Server is running!');

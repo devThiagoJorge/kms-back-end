@@ -112,7 +112,7 @@ module.exports = {
       return res.send({ error: "Failed searching for users." });
     }
   },
-
+//teste
   async delete(req, res) {
     try {
       const userFromParam = await User.findOne({ email: req.params.email });
